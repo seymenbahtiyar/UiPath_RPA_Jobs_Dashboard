@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UiPath RPA Jobs Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="sideMenu" class="side-menu">
+        <br></br>
+        <h2>Charts</h2>
+        <ul>
+            <li><a href="#statusChartContainer" onclick="toggleMenu()">Job Status Distribution</a></li>
+            <li><a href="#robotChartContainer" onclick="toggleMenu()">Jobs per Robot</a></li>
+            <li><a href="#occupancyChartContainer" onclick="toggleMenu()">Robot Occupancy Rate</a></li>
+            <li><a href="#processChartContainer" onclick="toggleMenu()">Jobs per Process</a></li>
+            <li><a href="#avgTimeChartContainer" onclick="toggleMenu()">Average Time per Process</a></li>
+            <li><a href="#faultedJobsChartContainer" onclick="toggleMenu()">Faulted Jobs per Process</a></li>
+            <li><a href="#jobsPerMonthChartContainer" onclick="toggleMenu()">Jobs per Month</a></li>
+        </ul>
+    </div>
+    
+    <div class="dashboard">
+        <div class="header">
+            <button class="open-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>UiPath RPA Jobs Dashboard</h1>
+            <button id="themeToggle" class="theme-toggle">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="filters">
+            <div class="date-range">
+                <label for="startDate"><i class="fas fa-calendar-alt"></i> Start Date:</label>
+                <input type="date" id="startDate" placeholder="YYYY-MM-DD">
+                <label for="endDate"><i class="fas fa-calendar-alt"></i> End Date:</label>
+                <input type="date" id="endDate" placeholder="YYYY-MM-DD">
+            </div>
+            <div class="other-filters">
+                <div class="multiselect">
+                    <div class="selectBox" onclick="toggleCheckboxes('robotCheckboxes')">
+                        <select>
+                            <option><i class="fas fa-robot"></i> Select Robot Machines</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="robotCheckboxes" class="checkboxes">
+                        <input type="text" placeholder="Search robots..." class="search-box">
+                        <div class="checkbox-container"></div>
+                    </div>
+                </div>
+                <div class="multiselect">
+                    <div class="selectBox" onclick="toggleCheckboxes('processCheckboxes')">
+                        <select>
+                            <option><i class="fas fa-cogs"></i> Select Processes</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="processCheckboxes" class="checkboxes">
+                        <input type="text" placeholder="Search processes..." class="search-box">
+                        <div class="checkbox-container"></div>
+                    </div>
+                </div>
+                <div class="multiselect">
+                    <div class="selectBox" onclick="toggleCheckboxes('statusCheckboxes')">
+                        <select>
+                            <option><i class="fas fa-flag"></i> Select States</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="statusCheckboxes" class="checkboxes">
+                        <input type="text" placeholder="Search states..." class="search-box">
+                        <div class="checkbox-container">
+                            <label><input type="checkbox" value="Successful" />Successful</label>
+                            <label><input type="checkbox" value="Faulted" />Faulted</label>
+                            <label><input type="checkbox" value="Stopped" />Stopped</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="multiselect">
+                    <div class="selectBox" onclick="toggleCheckboxes('folderCheckboxes')">
+                        <select>
+                            <option><i class="fas fa-folder"></i> Select Folders</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="folderCheckboxes" class="checkboxes">
+                        <input type="text" placeholder="Search folders..." class="search-box">
+                        <div class="checkbox-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <h2><i class="fas fa-server"></i> Total Machines</h2>
+                <p id="totalMachines"></p>
+            </div>
+            <div class="metric-card">
+                <h2><i class="fas fa-cogs"></i> Total Processes</h2>
+                <p id="totalProcesses"></p>
+            </div>
+            <div class="metric-card">
+                <h2><i class="fas fa-tasks"></i> Total Jobs</h2>
+                <p id="totalJobs"></p>
+            </div>
+            <div class="metric-card">
+                <h2><i class="fas fa-check-circle"></i> Successful Jobs</h2>
+                <p id="successfulJobs"></p>
+            </div>
+            <div class="metric-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Faulted Jobs</h2>
+                <p id="faultedJobs"></p>
+            </div>
+            <div class="metric-card">
+                <h2><i class="fas fa-stop-circle"></i> Stopped Jobs</h2>
+                <p id="stoppedJobs"></p>
+            </div>
+        </div>
+        <div class="charts">
+            <div class="chart-container" id="statusChartContainer">
+                <h2>Job Status Distribution</h2>
+                <canvas id="statusChart"></canvas>
+            </div>
+            <div class="chart-container" id="robotChartContainer">
+                <h2>Jobs per Robot</h2>
+                <canvas id="robotChart"></canvas>
+            </div>
+            <div class="chart-container" id="occupancyChartContainer">
+                <h2>Robot Occupancy Rate</h2>
+                <canvas id="occupancyChart"></canvas>
+            </div>
+            <div class="chart-container" id="processChartContainer">
+                <h2>Jobs per Process</h2>
+                <canvas id="processChart"></canvas>
+            </div>
+            <div class="chart-container" id="avgTimeChartContainer">
+                <h2>Average Time per Process</h2>
+                <canvas id="avgTimeChart"></canvas>
+            </div>
+            <div class="chart-container" id="faultedJobsChartContainer">
+                <h2>Faulted Jobs per Process</h2>
+                <canvas id="faultedJobsChart"></canvas>
+            </div>
+            <div class="chart-container" id="jobsPerMonthChartContainer">
+                <h2>Jobs per Month</h2>
+                <canvas id="jobsPerMonthChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

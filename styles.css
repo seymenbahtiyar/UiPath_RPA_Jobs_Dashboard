@@ -1,0 +1,427 @@
+:root {
+    --bg-color: #f0f0f0;
+    --card-bg-color: #ffffff;
+    --text-color: #333333;
+    --border-color: #dddddd;
+    --chart-bg-color: #f9f9f9;
+    --hover-bg-color: #e0e0e0;
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #e74c3c;
+}
+
+body.dark-theme {
+    --bg-color: #1a1a1a;
+    --card-bg-color: #2c2c2c;
+    --text-color: #ffffff;
+    --border-color: #444444;
+    --chart-bg-color: #363636;
+    --hover-bg-color: #4a4a4a;
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #e74c3c;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dashboard {
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: margin-left 0.5s;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    padding: 0 40px;
+}
+
+h1 {
+    color: var(--text-color);
+    margin: 0;
+    text-align: center;
+}
+
+.theme-toggle, .open-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    padding: 5px;
+    z-index: 1000;
+    transition: color 0.3s;
+}
+
+.theme-toggle:hover, .open-btn:hover {
+    color: var(--primary-color);
+}
+
+.theme-toggle {
+    right: 0;
+}
+
+.open-btn {
+    left: 0;
+}
+
+.theme-toggle .fa-sun {
+    display: none;
+}
+
+.dark-theme .theme-toggle .fa-sun {
+    display: inline-block;
+}
+
+.dark-theme .theme-toggle .fa-moon {
+    display: none;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    background-color: var(--chart-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.date-range, .other-filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.date-range {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.other-filters {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+}
+
+.date-range label,
+.other-filters label {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.date-range label i,
+.other-filters label i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+select, input[type="date"] {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-right: 10px;
+}
+
+select:hover, input[type="date"]:hover {
+    border-color: var(--primary-color);
+}
+
+select:focus, input[type="date"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+    outline: none;
+}
+
+.date-range input[type="date"],
+.date-range select {
+    margin-right: 10px;
+}
+
+.multiselect {
+    width: 200px;
+    position: relative;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.checkboxes {
+    display: none;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    max-height: 300px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+.search-box {
+    width: calc(100% - 45px);
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+}
+
+.checkbox-container {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.checkboxes label {
+    display: block;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.checkboxes label:hover {
+    background-color: var(--hover-bg-color);
+}
+
+.checkboxes input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.metrics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: nowrap;
+}
+
+.metric-card {
+    flex: 1;
+    min-width: 0;
+    background-color: var(--chart-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card h2 {
+    margin-top: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metric-card h2 i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.metric-card p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 15px 0 0;
+    color: var(--primary-color);
+}
+
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.chart-container {
+    width: 100%;
+    background-color: var(--chart-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h2 {
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+canvas {
+    max-height: 400px;
+    width: 100% !important;
+    height: auto !important;
+}
+
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: var(--card-bg-color);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.side-menu h2 {
+    padding: 8px 8px 8px 32px;
+    text-transform: uppercase;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.side-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.side-menu ul li {
+    padding: 8px 8px 8px 32px;
+    text-transform: capitalize;
+}
+
+.side-menu ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    display: block;
+    transition: 0.3s;
+}
+
+.side-menu ul li a:hover {
+    color: var(--primary-color);
+}
+
+.menu-open .dashboard {
+    margin-left: 250px;
+}
+
+@media (max-width: 1024px) {
+    .filters {
+        flex-direction: column;
+    }
+
+    .date-range, .other-filters {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .metrics {
+        flex-wrap: wrap;
+    }
+
+    .metric-card {
+        flex: 1 1 calc(33.333% - 10px);
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 30px;
+    }
+
+    .theme-toggle, .open-btn {
+        font-size: 1.2rem;
+    }
+
+    .chart-container {
+        padding: 15px;
+    }
+
+    canvas {
+        max-height: 350px;
+    }
+
+    .metric-card {
+        flex: 1 1 calc(50% - 7.5px);
+    }
+
+    .multiselect {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .metric-card {
+        flex: 1 1 100%;
+    }
+
+    .dashboard {
+        padding: 10px;
+    }
+
+    .filters {
+        padding: 10px;
+    }
+}
+
